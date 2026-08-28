@@ -1,0 +1,491 @@
+@import '@astryxdesign/core/reset.css';
+@import '@astryxdesign/core/astryx.css';
+@import '@astryxdesign/theme-neutral/theme.css';
+@import '@astryxdesign/theme-gothic/theme.css';
+@import '@astryxdesign/theme-chocolate/theme.css';
+
+/* ==========================================================================
+   GLOBAL DESIGN TOKENS & ROBUST FALLBACKS
+   ========================================================================== */
+:root,
+html,
+body,
+[data-astryx-theme],
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-body: var(--font-sans);
+  --font-family-heading: var(--font-sans);
+  --font-family-code: var(--font-mono);
+
+  /* Astryx Core Color Tokens (Dark Theme Defaults) */
+  --color-background-screen: #0a0e17;
+  --color-background-body: #0d111a;
+  --color-background-surface: #131926;
+  --color-background-card: #161e2e;
+  --color-background-popover: #161e2e;
+  --color-background-muted: #1c2438;
+  
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-disabled: #64748b;
+  --color-text-accent: #38bdf8;
+  --color-on-dark: #ffffff;
+  --color-on-light: #0f172a;
+  --color-on-accent: #ffffff;
+
+  --color-accent: #6366f1;
+  --color-accent-muted: rgba(99, 102, 241, 0.15);
+  --color-neutral: rgba(255, 255, 255, 0.08);
+  --color-overlay: rgba(0, 0, 0, 0.75);
+  --color-overlay-hover: rgba(255, 255, 255, 0.06);
+  --color-overlay-pressed: rgba(255, 255, 255, 0.12);
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-emphasized: rgba(255, 255, 255, 0.16);
+
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-icon-primary: #f8fafc;
+  --color-icon-secondary: #94a3b8;
+
+  /* Syntax Highlighting Tokens */
+  --color-syntax-background: #0d1117;
+  --color-syntax-keyword: #ff7b72;
+  --color-syntax-string: #a5d6ff;
+  --color-syntax-function: #d2a8ff;
+  --color-syntax-variable: #79c0ff;
+  --color-syntax-comment: #8b949e;
+  --color-syntax-tag: #7ee787;
+  --color-syntax-attribute: #ffa657;
+
+  /* Spacing Scale */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+
+  /* Radius Scale */
+  --radius-none: 0px;
+  --radius-inner: 6px;
+  --radius-element: 8px;
+  --radius-container: 12px;
+  --radius-page: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-low: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-med: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-high: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* ==========================================================================
+   THEME VARIANTS
+   ========================================================================== */
+[data-astryx-theme="gothic"] {
+  --color-background-screen: #08090c;
+  --color-background-body: #0c0d12;
+  --color-background-surface: #12141a;
+  --color-background-card: #161822;
+  --color-accent: #a855f7;
+  --color-accent-muted: rgba(168, 85, 247, 0.15);
+  --color-text-accent: #c084fc;
+  --color-border: rgba(255, 255, 255, 0.07);
+}
+
+[data-astryx-theme="chocolate"] {
+  --color-background-screen: #120d0a;
+  --color-background-body: #19120e;
+  --color-background-surface: #221a14;
+  --color-background-card: #2c221a;
+  --color-accent: #f97316;
+  --color-accent-muted: rgba(249, 115, 22, 0.15);
+  --color-text-accent: #fb923c;
+  --color-border: rgba(255, 255, 255, 0.07);
+}
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--color-background-screen);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   ASTRYX COMPONENT STYLES & OVERRIDES
+   ========================================================================== */
+
+/* Buttons */
+button,
+.astryx-button,
+[role="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-element);
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+  text-decoration: none;
+}
+
+button:focus-visible,
+.astryx-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Primary Button */
+button[data-variant="primary"],
+.astryx-button[data-variant="primary"],
+button.primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35);
+}
+button[data-variant="primary"]:hover,
+.astryx-button[data-variant="primary"]:hover,
+button.primary:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.5);
+  transform: translateY(-1px);
+}
+button[data-variant="primary"]:active,
+.astryx-button[data-variant="primary"]:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button */
+button[data-variant="secondary"],
+.astryx-button[data-variant="secondary"],
+button.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+button[data-variant="secondary"]:hover,
+.astryx-button[data-variant="secondary"]:hover,
+button.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Small Button */
+button[data-size="sm"],
+.astryx-button[data-size="sm"] {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: var(--radius-inner);
+}
+
+/* Inputs */
+input[type="text"],
+input[type="search"],
+.astryx-textinput,
+.astryx-textinput input {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-element);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+}
+input[type="text"]:focus,
+input[type="search"]:focus,
+.astryx-textinput:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-muted);
+}
+input::placeholder {
+  color: var(--color-text-disabled);
+}
+
+/* Resizable Panels & Splitters */
+[data-panel="layout-panel"],
+.astryx-layout-panel {
+  background: var(--color-background-surface);
+  border-color: var(--color-border);
+  overflow: hidden;
+}
+
+[data-resize-handle],
+.astryx-resize-handle {
+  position: relative;
+  background: var(--color-border);
+  transition: background 0.2s ease;
+  z-index: 10;
+}
+[data-resize-handle]:hover,
+.astryx-resize-handle:hover {
+  background: var(--color-accent) !important;
+}
+
+/* Headings & Text */
+h1, h2, h3, h4, h5, h6,
+.astryx-heading {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p, span,
+.astryx-text {
+  color: var(--color-text-primary);
+}
+
+.astryx-text[data-color="secondary"],
+.text-secondary {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Tree List in File Explorer */
+.astryx-treelist,
+[role="tree"] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.astryx-treelist-item,
+[role="treeitem"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--radius-inner);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  user-select: none;
+}
+.astryx-treelist-item:hover,
+[role="treeitem"]:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+.astryx-treelist-item[data-selected="true"],
+.astryx-treelist-item.active,
+[role="treeitem"][aria-selected="true"] {
+  background: rgba(99, 102, 241, 0.15);
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+/* Segmented Controls (Properties / History) */
+.astryx-segmented-control,
+[role="radiogroup"] {
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-element);
+  padding: 3px;
+  gap: 2px;
+  width: 100%;
+}
+
+.astryx-segmented-control-item,
+[role="radio"] {
+  flex: 1;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-inner);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.astryx-segmented-control-item:hover,
+[role="radio"]:hover {
+  color: #ffffff;
+}
+.astryx-segmented-control-item[data-state="checked"],
+.astryx-segmented-control-item.active,
+[role="radio"][aria-checked="true"] {
+  background: #1e293b;
+  color: #38bdf8;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Metadata List */
+.astryx-metadata-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  font-size: 12px;
+  padding: 8px 0;
+}
+
+.astryx-metadata-list-item-label {
+  color: var(--color-text-secondary);
+}
+.astryx-metadata-list-item-value {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+/* CodeBlock */
+.astryx-codeblock,
+pre, code {
+  font-family: var(--font-mono) !important;
+  background: var(--color-syntax-background);
+  border-radius: var(--radius-element);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   IDE SHELL SPECIFIC STYLES
+   ========================================================================== */
+.bolt-header {
+  height: 48px;
+  background: #0d121f;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  user-select: none;
+  z-index: 50;
+}
+
+.bolt-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bolt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.bolt-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.editor-tab-bar {
+  display: flex;
+  align-items: center;
+  background: #090d16;
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  min-height: 36px;
+}
+.editor-tab-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.editor-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  color: #94a3b8;
+  background: transparent;
+  border-right: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.editor-tab-item:hover {
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.03);
+}
+.editor-tab-item.active {
+  color: #38bdf8;
+  background: #0d1117;
+  border-top: 2px solid #38bdf8;
+  font-weight: 600;
+}
+
+.ide-status-bar {
+  height: 26px;
+  background: #090c14;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 11px;
+  color: #94a3b8;
+  user-select: none;
+  z-index: 40;
+}

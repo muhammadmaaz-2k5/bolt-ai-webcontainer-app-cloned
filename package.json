@@ -1,0 +1,33 @@
+{
+  "name": "bolt-ai",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "astryx": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs"
+  },
+  "dependencies": {
+    "@astryxdesign/cli": "^0.5.0",
+    "@astryxdesign/core": "^0.5.0",
+    "@astryxdesign/theme-chocolate": "^0.5.0",
+    "@astryxdesign/theme-gothic": "^0.5.0",
+    "@astryxdesign/theme-neutral": "^0.5.0",
+    "@heroicons/react": "^2.2.0",
+    "@webcontainer/api": "^1.6.4",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  }
+}
